@@ -25,10 +25,10 @@ public class Validadores {
 
     public static boolean validarEmprendedorCompleto(Emprendedor e) {
         if (e == null) return false;
-        if (!emailValido(e.m)) return false;
-        if (!telefonoValido(e.t)) return false;
-        if (e.n == null || e.n.length() < 2) return false;
-        if (e.cat == null) return false;
+        if (!emailValido(e.email)) return false;
+        if (!telefonoValido(e.telefono)) return false;
+        if (e.nombre == null || e.nombre.length() < 2) return false;
+        if (e.categoria == null) return false;
         return true;
     }
 

@@ -23,9 +23,7 @@ public class Main {
         Producto p2 = new Producto("Pulsera", 800.0, 20, "artesania", "E002");
         emp2.agregarProducto(p1);
         emp2.agregarProducto(p2);
-        gestor.emprendedores.add(emp2);
-        gestor.productos.add(p1);
-        gestor.productos.add(p2);
+        gestor.registrarEmprendedor(emp2);
 
         gestor.registrarVenta("V001", "E001", "Empanadas", 10, 500.0, "2026-05-12");
         gestor.registrarVenta("V002", "E002", "Collar", 1, 2000.0, "2026-05-12");
@@ -36,8 +34,8 @@ public class Main {
 
         reportes.imprimirResumenEjecutivo(gestor);
 
-        System.out.println("Emprendedor Ana válido? " + Validadores.validarEmprendedorCompleto(gestor.emprendedores.get(0)));
+        System.out.println("Emprendedor Ana válido? " + Validadores.validarEmprendedorCompleto(gestor.getEmprendedores().get(0)));
 
-        System.out.println(gestor.emprendedores.get(0).mostrarInfoYValidar());
+        System.out.println(gestor.getEmprendedores().get(0).mostrarInfo());
     }
 }

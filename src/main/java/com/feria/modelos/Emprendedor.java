@@ -3,77 +3,56 @@ package com.feria.modelos;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Emprendedor {
 
-    public String n;      // nombre
-    public String id;     // identificador
-    public String t;      // teléfono
-    public String m;      // email
-    public String cat;    // categoria: comida, artesania, tecnologia, ropa
+    public String nombre;
+    public String id;
+    public String telefono;
+    public String email;
+    public String categoria;
 
+    public List<Producto> productos;
 
-    public List<Producto> prods;
-
-    public Emprendedor(String nom, String id, String tel, String mail, String categoria) {
-        this.n = nom;
+    public Emprendedor(String nombre, String id, String telefono, String email, String categoria) {
+        this.nombre = nombre;
         this.id = id;
-        this.t = tel;
-        this.m = mail;
-        this.cat = categoria;
-        this.prods = new ArrayList<>();
+        this.telefono = telefono;
+        this.email = email;
+        this.categoria = categoria;
+        this.productos = new ArrayList<>();
     }
 
-
-    public String mostrarInfoYValidar() {
-        String info = "Emprendedor: " + n + "\n";
+    public String mostrarInfo() {
+        String info = "Emprendedor: " + nombre + "\n";
         info += "ID: " + id + "\n";
-        info += "Contacto: " + t + " | " + m + "\n";
-        info += "Categoría: " + cat + "\n";
-
-        // VALIDACIONES
-        if (n == null || n.length() < 2) {
-            info += "⚠️ NOMBRE DEMASIADO CORTO\n";
-        }
-        if (m == null || !m.contains("@")) {
-            info += "⚠️ EMAIL INVÁLIDO\n";
-        }
-        if (cat == null || (!cat.equals("comida") && !cat.equals("artesania") && 
-                           !cat.equals("tecnologia") && !cat.equals("ropa"))) {
-            info += "⚠️ CATEGORÍA DESCONOCIDA\n";
-        }
-
+        info += "Contacto: " + telefono + " | " + email + "\n";
+        info += "Categoría: " + categoria + "\n";
         info += "Productos:\n";
-        for (Producto p : prods) {
+        for (Producto p : productos) {
             info += "  - " + p.nombre + " ($" + p.precio + ")\n";
         }
-
         return info;
     }
 
-
     public boolean validarCompleto() {
-        boolean valido = true;
-        if (n == null || n.length() < 2) valido = false;
-        if (m == null || !m.contains("@")) valido = false;
-        if (cat == null || (!cat.equals("comida") && !cat.equals("artesania") && 
-                           !cat.equals("tecnologia") && !cat.equals("ropa"))) valido = false;
-        return valido;
+        if (nombre == null || nombre.length() < 2) return false;
+        if (email == null || !email.contains("@")) return false;
+        if (categoria == null || (!categoria.equals("comida") && !categoria.equals("artesania") &&
+                !categoria.equals("tecnologia") && !categoria.equals("ropa"))) return false;
+        return true;
     }
 
-
     public String getNombre() {
-        return n;
+        return nombre;
     }
 
     public void agregarProducto(Producto p) {
-        prods.add(p);
+        productos.add(p);
     }
-
 
     public int calcularValorTotalStock() {
         int total = 0;
-        for (Producto p : prods) {
+        for (Producto p : productos) {
             total += p.precio * p.stock;
         }
         return total;
