@@ -99,11 +99,3 @@ public String generarReportePorCategoria(IGestorFeria gestor, ...) { ... }
 
 ---
 
-### Estructura del proyecto
-
-```
-src/main/java/com/feria/
-    servicios/
-        IGestorFeria.java      <- nuevo
-
-```
