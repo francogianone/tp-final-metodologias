@@ -1,5 +1,6 @@
 package com.feria.modelos;
 
+import com.feria.utils.Validadores;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,11 +36,7 @@ public class Emprendedor {
     }
 
     public boolean validarCompleto() {
-        if (nombre == null || nombre.length() < 2) return false;
-        if (email == null || !email.contains("@")) return false;
-        if (categoria == null || (!categoria.equals("comida") && !categoria.equals("artesania") &&
-                !categoria.equals("tecnologia") && !categoria.equals("ropa"))) return false;
-        return true;
+        return Validadores.validarEmprendedorCompleto(this);
     }
 
     public String getNombre() {

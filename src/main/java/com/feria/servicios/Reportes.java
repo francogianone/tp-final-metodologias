@@ -29,11 +29,7 @@ public class Reportes {
         System.out.println("Total productos: " + gestor.getProductos().size());
         System.out.println("Total ventas: " + gestor.getVentas().size());
 
-        double totalVentas = 0;
-        for (Venta v : gestor.getVentas()) {
-            totalVentas += v.calcularTotalConDescuento();
-        }
-        System.out.println("Total facturado: $" + totalVentas);
+        System.out.println("Total facturado: $" + calcularVentasTotales(gestor));
 
         int emprendedoresStockBajo = 0;
         for (Emprendedor e : gestor.getEmprendedores()) {

@@ -67,16 +67,15 @@ Tres instancias de logica duplicada:
 
 ### Refactorizaciones aplicadas
 
-| # | Refactorizacion | Archivo |
-|---|---|---|
-| 1 | Renombrar campos cripticos (`n`→`nombre`, `t`→`telefono`, `m`→`email`, `cat`→`categoria`, `prods`→`productos`) | `Emprendedor.java` |
-| 2 | Reemplazar `mostrarInfoYValidar()` por `mostrarInfo()` con unica responsabilidad | `Emprendedor.java` |
-| 3 | Eliminar metodo duplicado `hayStockBajo()` | `Producto.java` |
-| 4 | Eliminar metodo duplicado `generarReportePorCategoriaAlternativo()` | `Reportes.java` |
-| 5 | Usar `p.isStockBajo()` en lugar de `p.stock < 5` hardcodeado | `Reportes.java` |
-| 6 | Agregar `registrarEmprendedor(Emprendedor e)` en `GestorFeria`; corregir acceso directo desde `Main` | `GestorFeria.java`, `Main.java` |
-| 7 | Usar `Validadores.emailValido()` en `GestorFeria` en lugar de logica inline repetida | `GestorFeria.java` |
-| 8 | Crear interfaz `IGestorFeria`; hacer que `Reportes` dependa de ella en lugar de `GestorFeria` concreto | `IGestorFeria.java`, `Reportes.java` |
+En `Emprendedor.java` se renombraron los campos cripticos: `n` paso a `nombre`, `t` a `telefono`, `m` a `email`, `cat` a `categoria` y `prods` a `productos`. Tambien se reemplazo el metodo `mostrarInfoYValidar()` por `mostrarInfo()`, que solo presenta datos sin mezclar validaciones.
+
+En `Producto.java` se elimino el metodo `hayStockBajo()`, que era identico al ya existente `isStockBajo()`.
+
+En `Reportes.java` se elimino el metodo `generarReportePorCategoriaAlternativo()`, que duplicaba la logica de `generarReportePorCategoria()`. Ademas, se reemplazo la condicion hardcodeada `p.stock < 5` por una llamada al metodo `p.isStockBajo()`, y el calculo inline del total facturado en `imprimirResumenEjecutivo()` fue reemplazado por una llamada al metodo `calcularVentasTotales()`.
+
+En `GestorFeria.java` se agrego el metodo `registrarEmprendedor(Emprendedor e)` para centralizar el registro, eliminando el acceso directo a la lista interna que se hacia desde `Main.java`. Tambien se reemplazo la logica de validacion de email inline por una llamada a `Validadores.emailValido()`.
+
+Se extrajo la interfaz `IGestorFeria` con los metodos `getEmprendedores()`, `getProductos()` y `getVentas()`. `GestorFeria` ahora la implementa y `Reportes` depende de ella en lugar de la clase concreta.
 
 ---
 
@@ -104,25 +103,7 @@ public String generarReportePorCategoria(IGestorFeria gestor, ...) { ... }
 
 ```
 src/main/java/com/feria/
-    Main.java
-    modelos/
-        Emprendedor.java
-        Producto.java
-        Venta.java
     servicios/
         IGestorFeria.java      <- nuevo
-        GestorFeria.java
-        Reportes.java
-    utils/
-        Validadores.java
-```
 
----
-
-### Como ejecutar
-
-```bash
-mvn compile
-mvn package
-java -cp target/feria-emprendedores-1.0-SNAPSHOT.jar com.feria.Main
 ```
