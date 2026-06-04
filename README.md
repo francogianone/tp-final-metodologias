@@ -99,3 +99,27 @@ public String generarReportePorCategoria(IGestorFeria gestor, ...) { ... }
 
 ---
 
+## Semana 2 - Patron de diseño
+
+### Problema 
+
+En`GestorFeria`, el metodo getEmprendedoresConStockBajo() pedia ser llamado manualmente despues de cada venta para saber si algun producto habia quedado con stock bajo. No existia ninguna notificacion automatica
+
+### Patron elegido: Observer
+
+Implementamos el patron Observer para que GestorFeria notifique automaticamente cuando el stock de un producto esta por debajo de los limites al registrar una venta
+
+- `ObservadorStock` : define el contrato `notificarStockBajo(nombreEmprendedor, nombreProducto, stockActual)`
+- `AlertaConsolaStock` : imprime la alerta en consola
+- `GestorFeria` : mantiene una lista de observadores y llama `notificarStockBajo()` dentro de `registrarVenta()` cuando corresponde
+
+### Justificacion
+
+Una solucion alternativa era llamar `getEmprendedoresConStockBajo()` manualmente desde main despues de cada venta. Funcionaba, pero acopla a quien registra ventas con la responsabilidad de revisar el stock, y si hay otros modulos que necesiten reaccionar, cada uno tendria que hacer lo mismo por su cuenta
+
+**Implementado:** GestorFeria notifica solo a quienes se hayan suscrito, sin saber quienes son ni cuantos. Se pueden agregar nuevos observadores  sin tocar GestorFeria. La logica de ventas queda separada de la logica de reaccion ante el evento
+
+
+### Diagrama UML codigo actual
+![Diagrama UML del patrón Observer implementado](umlsemana2.png)
+---
