@@ -1,6 +1,6 @@
 # Trabajo Practico Integrador - Metodologias de Sistemas II
 ## Feria de Emprendedores
-## Grupo: Gianone Franco, Godoy Nahuel, Acosta Florencia
+## Grupo: Gianone Franco, Godoy Nahuel, Acosta Florencia, Toscanini Juan Manuel
 ---
 
 ## Semana 1 - Refactorizacion inicial (Codigo limpio + SOLID)
