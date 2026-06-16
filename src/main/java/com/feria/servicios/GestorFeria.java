@@ -1,6 +1,7 @@
 package com.feria.servicios;
 
 import com.feria.modelos.*;
+import com.feria.observadores.ObservadorStock;
 import com.feria.utils.Validadores;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,11 +11,17 @@ public class GestorFeria implements IGestorFeria {
     private List<Emprendedor> emprendedores;
     private List<Producto> productos;
     private List<Venta> ventas;
+    private List<ObservadorStock> observadores;
 
     public GestorFeria() {
         emprendedores = new ArrayList<>();
         productos = new ArrayList<>();
         ventas = new ArrayList<>();
+        observadores = new ArrayList<>();
+    }
+
+    public void suscribir(ObservadorStock o) {
+        observadores.add(o);
     }
 
     @Override
@@ -90,6 +97,19 @@ public class GestorFeria implements IGestorFeria {
         ventas.add(v);
         productoEncontrado.stock -= cantidad;
         System.out.println("Venta registrada. Nuevo stock: " + productoEncontrado.stock);
+
+        if (productoEncontrado.isStockBajo()) {
+            String nombreEmp = empId;
+            for (Emprendedor e : emprendedores) {
+                if (e.id.equals(empId)) {
+                    nombreEmp = e.getNombre();
+                    break;
+                }
+            }
+            for (ObservadorStock o : observadores) {
+                o.notificarStockBajo(nombreEmp, productoEncontrado.nombre, productoEncontrado.stock);
+            }
+        }
     }
 
     public List<Emprendedor> getEmprendedoresConStockBajo() {

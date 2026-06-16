@@ -1,5 +1,12 @@
 package com.feria.servicios;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.*;
+import java.util.stream.*;
+
 import com.feria.modelos.*;
 
 public class Reportes {
@@ -22,6 +29,22 @@ public class Reportes {
         }
         return total;
     }
+
+
+    public List<String> topProductosMasVendidos(IGestorFeria gestor, int limite) {
+        Map<String, Integer> cantidadPorProducto = new HashMap<>();
+
+        for (Venta v : gestor.getVentas()) {
+            cantidadPorProducto.merge(v.productoNombre, v.cantidad, Integer::sum);
+        }
+
+        return cantidadPorProducto.entrySet().stream()
+            .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+            .limit(limite)
+            .map(Map.Entry::getKey)
+            .collect(Collectors.toList());
+    }
+
 
     public void imprimirResumenEjecutivo(IGestorFeria gestor) {
         System.out.println("========== RESUMEN EJECUTIVO ==========");

@@ -1,6 +1,7 @@
 package com.feria;
 
 import com.feria.modelos.*;
+import com.feria.observadores.AlertaConsolaStock;
 import com.feria.servicios.*;
 import com.feria.utils.*;
 import java.util.Arrays;
@@ -10,6 +11,8 @@ public class Main {
     public static void main(String[] args) {
         GestorFeria gestor = new GestorFeria();
         Reportes reportes = new Reportes();
+
+        gestor.suscribir(new AlertaConsolaStock());
 
         gestor.registrarEmprendedorConProductos(
             "Ana", "E001", "3423456789", "ana@gmail.com", "comida",
@@ -27,6 +30,7 @@ public class Main {
 
         gestor.registrarVenta("V001", "E001", "Empanadas", 10, 500.0, "2026-05-12");
         gestor.registrarVenta("V002", "E002", "Collar", 1, 2000.0, "2026-05-12");
+        gestor.registrarVenta("V003", "E002", "Collar", 4, 2000.0, "2026-05-12");
 
         System.out.println(reportes.generarReportePorCategoria(gestor, "comida"));
 
